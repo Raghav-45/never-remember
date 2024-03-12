@@ -17,63 +17,67 @@ import { ChevronRight, ClipboardIcon, CopyIcon, DeleteIcon, EllipsisIcon, EyeIco
 import { Toggle } from "@/components/ui/toggle"
 import { useState } from "react"
 import { toast } from "sonner"
-import {CopyToClipboard} from 'react-copy-to-clipboard'
+import copy from 'clipboard-copy'
 
 export default function Dashboard() {
   return (
-      <div className="space-y-6">
-        <div className="space-y-4">
-          <div>
-            <Card>
-              <CardHeader className="pb-0">
-                <CardTitle>Passwords</CardTitle>
-                <CardDescription>
-                  You don&apos;t have to remember 235 passwords.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="px-0 pt-3">
-                <div className="flex items-center space-x-2 sticky top-0 z-10 py-3 backdrop-blur-md px-6">
-                  <Input
-                    type="search"
-                    placeholder="Search..."
-                    className="flex-auto w-full"
-                  />
-                  <Button variant="outline" size="icon" className="flex-none h-9 w-9 rounded-full">
-                    <SearchIcon className="h-4 w-4" />
-                  </Button>
-                </div>
-                <div className="space-y-8 px-6 pt-3">
-                  <PasswordItem />
-                  <PasswordItem />
-                  <PasswordItem />
-                  <PasswordItem />
-                  <PasswordItem />
-                  <PasswordItem />
-                  <PasswordItem />
-                  <PasswordItem />
-                  <PasswordItem />
-                  <PasswordItem />
-                  <PasswordItem />
-                  <PasswordItem />
-                  <PasswordItem />
-                  <PasswordItem />
-                  <PasswordItem />
-                  <PasswordItem />
-                  <PasswordItem />
-                  <PasswordItem />
-                  <PasswordItem />
-                  <PasswordItem />
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+    <div className="space-y-6">
+      <div className="space-y-4">
+        <div>
+          <Card>
+            <CardHeader className="pb-0">
+              <CardTitle>Passwords</CardTitle>
+              <CardDescription>
+                You don&apos;t have to remember 235 passwords.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="px-0 pt-3">
+              <div className="flex items-center space-x-2 sticky top-0 z-10 py-3 backdrop-blur-md px-6">
+                <Input
+                  type="search"
+                  placeholder="Search..."
+                  className="flex-auto w-full"
+                />
+                <Button variant="outline" size="icon" className="flex-none h-9 w-9 rounded-full">
+                  <SearchIcon className="h-4 w-4" />
+                </Button>
+              </div>
+              <div className="space-y-8 px-6 pt-3">
+                <PasswordItem />
+                <PasswordItem />
+                <PasswordItem />
+                <PasswordItem />
+                <PasswordItem />
+                <PasswordItem />
+                <PasswordItem />
+                <PasswordItem />
+                <PasswordItem />
+                <PasswordItem />
+                <PasswordItem />
+                <PasswordItem />
+                <PasswordItem />
+                <PasswordItem />
+                <PasswordItem />
+                <PasswordItem />
+                <PasswordItem />
+                <PasswordItem />
+                <PasswordItem />
+                <PasswordItem />
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
+    </div>
   )
 }
 
 function PasswordItem(props: any) {
   const [showPassword, setShowPassword] = useState(false)
+
+  const [site_name, setSite_name] = useState('Gmail')
+  const [site_url, setSite_url] = useState('mail.google.com')
+  const [password, setPassword] = useState('nopassword')
   return (
     <div className="flex items-center">
       <DropdownMenu>
@@ -84,7 +88,7 @@ function PasswordItem(props: any) {
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
-          <DropdownMenuLabel>Gmail</DropdownMenuLabel>
+          <DropdownMenuLabel>{site_name}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem>
@@ -104,16 +108,24 @@ function PasswordItem(props: any) {
         </DropdownMenuContent>
       </DropdownMenu>
       <div className="ml-4 space-y-1">
-        <p className="text-sm font-medium leading-none">mail.google.com</p>
-        <p className="text-sm text-muted-foreground truncate">{showPassword ? 'raghavvv' : '••••••••'}</p>
+        <p className="text-sm font-medium leading-none">{site_url}</p>
+        <p className="text-sm text-muted-foreground truncate">{showPassword ? password : '••••••••'}</p>
       </div>
       {/* <div className="ml-auto font-medium">+$1,999.00</div> */}
       <Toggle pressed={showPassword} onPressedChange={(e) => setShowPassword(e)} aria-label="Toggle bold" className="ml-auto">
         {showPassword ? <EyeIcon className="h-4 w-4" /> : <EyeOffIcon className="h-4 w-4" />}
       </Toggle>
-      <Button onClick={() => {CopyToClipboard('copyText.value'); toast("Password has been copied.", {description: "You can use it now"});}} variant="ghost" className="flex h-8 w-8 p-0">
+      <Button onClick={() => {handleCopyClick(password); toast("Password has been copied.", {description: "You can use it now"});}} variant="ghost" className="flex h-8 w-8 p-0">
         <ClipboardIcon className="h-4 w-4" />
       </Button>
     </div>
   )
+}
+
+const handleCopyClick = async (text: string) => {
+  try {
+    await copy(text)
+  } catch (error) {
+    toast.error('Failed to copy password to clipboard')
+  }
 }
