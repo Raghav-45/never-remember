@@ -1,3 +1,5 @@
+'use client'
+
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card"
 import {
   DropdownMenu,
@@ -5,19 +7,17 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { ChevronRight, CopyIcon, DeleteIcon, EllipsisIcon, PencilIcon, SearchIcon, SettingsIcon, Trash2Icon } from "lucide-react"
+import { ChevronRight, ClipboardIcon, CopyIcon, DeleteIcon, EllipsisIcon, EyeIcon, EyeOffIcon, PencilIcon, SearchIcon, SettingsIcon, Trash2Icon } from "lucide-react"
+import { Toggle } from "@/components/ui/toggle"
+import { useState } from "react"
+import { toast } from "sonner"
+import {CopyToClipboard} from 'react-copy-to-clipboard'
 
 export default function Dashboard() {
   return (
@@ -73,6 +73,7 @@ export default function Dashboard() {
 }
 
 function PasswordItem(props: any) {
+  const [showPassword, setShowPassword] = useState(false)
   return (
     <div className="flex items-center">
       <DropdownMenu>
@@ -104,11 +105,14 @@ function PasswordItem(props: any) {
       </DropdownMenu>
       <div className="ml-4 space-y-1">
         <p className="text-sm font-medium leading-none">mail.google.com</p>
-        <p className="text-sm text-muted-foreground truncate">••••••••</p>
+        <p className="text-sm text-muted-foreground truncate">{showPassword ? 'raghavvv' : '••••••••'}</p>
       </div>
       {/* <div className="ml-auto font-medium">+$1,999.00</div> */}
-      <Button variant="ghost" className="flex h-8 w-8 p-0 ml-auto">
-        <ChevronRight className="h-4 w-4" />
+      <Toggle pressed={showPassword} onPressedChange={(e) => setShowPassword(e)} aria-label="Toggle bold" className="ml-auto">
+        {showPassword ? <EyeIcon className="h-4 w-4" /> : <EyeOffIcon className="h-4 w-4" />}
+      </Toggle>
+      <Button onClick={() => {CopyToClipboard('copyText.value'); toast("Password has been copied.", {description: "You can use it now"});}} variant="ghost" className="flex h-8 w-8 p-0">
+        <ClipboardIcon className="h-4 w-4" />
       </Button>
     </div>
   )

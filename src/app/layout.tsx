@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import SessionProvider from "./SessionProvider";
+import { Toaster } from "@/components/ui/sonner"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,7 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           {/* <Navbar /> */}
           <div className='container max-w-7xl mx-auto h-full px-0'>{children}</div>
+          <Toaster />
         </SessionProvider>
       </body>
     </html>
