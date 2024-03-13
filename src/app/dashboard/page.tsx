@@ -1,6 +1,5 @@
 'use client'
 
-import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,10 +9,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { ChevronRight, ClipboardIcon, CopyIcon, DeleteIcon, EllipsisIcon, EyeIcon, EyeOffIcon, PencilIcon, SearchIcon, SettingsIcon, Trash2Icon } from "lucide-react"
+import { ClipboardIcon, CopyIcon, EyeIcon, EyeOffIcon, PencilIcon, Trash2Icon } from "lucide-react"
 import { Toggle } from "@/components/ui/toggle"
 import { useState } from "react"
 import { toast } from "sonner"
@@ -21,54 +19,28 @@ import copy from 'clipboard-copy'
 
 export default function Dashboard() {
   return (
-    <div className="space-y-6">
-      <div className="space-y-4">
-        <div>
-          <Card>
-            <CardHeader className="pb-0">
-              <CardTitle>Passwords</CardTitle>
-              <CardDescription>
-                You don&apos;t have to remember 235 passwords.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="px-0 pt-3">
-              <div className="flex items-center space-x-2 sticky top-0 z-10 py-3 backdrop-blur-md px-6">
-                <Input
-                  type="search"
-                  placeholder="Search..."
-                  className="flex-auto w-full"
-                />
-                <Button variant="outline" size="icon" className="flex-none h-9 w-9 rounded-full">
-                  <SearchIcon className="h-4 w-4" />
-                </Button>
-              </div>
-              <div className="space-y-8 px-6 pt-3">
-                <PasswordItem />
-                <PasswordItem />
-                <PasswordItem />
-                <PasswordItem />
-                <PasswordItem />
-                <PasswordItem />
-                <PasswordItem />
-                <PasswordItem />
-                <PasswordItem />
-                <PasswordItem />
-                <PasswordItem />
-                <PasswordItem />
-                <PasswordItem />
-                <PasswordItem />
-                <PasswordItem />
-                <PasswordItem />
-                <PasswordItem />
-                <PasswordItem />
-                <PasswordItem />
-                <PasswordItem />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    </div>
+    <>
+      <PasswordItem />
+      <PasswordItem />
+      <PasswordItem />
+      <PasswordItem />
+      <PasswordItem />
+      <PasswordItem />
+      <PasswordItem />
+      <PasswordItem />
+      <PasswordItem />
+      <PasswordItem />
+      <PasswordItem />
+      <PasswordItem />
+      <PasswordItem />
+      <PasswordItem />
+      <PasswordItem />
+      <PasswordItem />
+      <PasswordItem />
+      <PasswordItem />
+      <PasswordItem />
+      <PasswordItem />
+    </>
   )
 }
 
