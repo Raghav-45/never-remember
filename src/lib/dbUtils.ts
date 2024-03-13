@@ -48,7 +48,7 @@ async function createLoginDetails() {
     contents: [],
   }
   const playlistDocRef = await addDoc(
-    collection(db, 'playlists'),
+    collection(db, 'data'),
     emptyPlaylistObject
   )
   return playlistDocRef.id
@@ -85,7 +85,7 @@ export {
   getUserLoginDetails,
   addToLoginDetails,
   removeFromLoginDetails,
-  // createLoginDetails,
+  createLoginDetails,
   // getUserPlaylists,
   // createPlaylist,
   // addToPlaylist,

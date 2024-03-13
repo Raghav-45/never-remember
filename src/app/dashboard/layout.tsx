@@ -8,6 +8,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PlusIcon, SearchIcon } from "lucide-react";
+import NewEntryDialog from "@/components/NewEntryDialog";
 
 export default function DashboardLayout({
   children, // will be a page or nested layout
@@ -27,13 +28,7 @@ export default function DashboardLayout({
             </CardHeader>
             <CardContent className="px-0 pt-3">
               <div className="top-0 z-10 sticky flex items-center space-x-2 backdrop-blur-md px-6 py-3">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="flex-none rounded-full w-9 h-9"
-                >
-                  <PlusIcon className="w-4 h-4" />
-                </Button>
+                <NewEntryDialog />
                 <Input
                   type="search"
                   placeholder="Search..."
