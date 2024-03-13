@@ -29,6 +29,7 @@ interface PasswordItemProps {
   url: string;
   name: string;
   image: string;
+  login: string;
   password: string;
 }
 
@@ -36,6 +37,7 @@ const PasswordItem: FC<PasswordItemProps> = ({
   url,
   name,
   image,
+  login,
   password,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -49,7 +51,12 @@ const PasswordItem: FC<PasswordItemProps> = ({
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
-          <DropdownMenuLabel>{name}</DropdownMenuLabel>
+          <DropdownMenuLabel className="font-normal">
+            <div className="flex flex-col space-y-1">
+              <p className="font-medium text-sm leading-none">{name}</p>
+              <p className="text-muted-foreground text-xs leading-none">{login}</p>
+            </div>
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem>
@@ -69,8 +76,9 @@ const PasswordItem: FC<PasswordItemProps> = ({
         </DropdownMenuContent>
       </DropdownMenu>
       <div className="space-y-1 ml-4">
-        <p className="font-medium text-sm leading-none">{url}</p>
-        <p className="text-muted-foreground text-sm truncate">
+        <p className="font-medium text-sm leading-4">{url}</p>
+        <p className="font-medium text-xs leading-none">{login}</p>
+        <p className="text-muted-foreground text-xs truncate leading-none">
           {showPassword ? password : "••••••••"}
         </p>
       </div>
