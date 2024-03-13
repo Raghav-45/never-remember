@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { FC } from "react";
 import {
@@ -25,25 +25,31 @@ import { useState } from "react";
 import { toast } from "sonner";
 import copy from "clipboard-copy";
 
-interface PasswordItemProps {}
+interface PasswordItemProps {
+  url: string;
+  name: string;
+  image: string;
+  password: string;
+}
 
-const PasswordItem: FC<PasswordItemProps> = ({}) => {
+const PasswordItem: FC<PasswordItemProps> = ({
+  url,
+  name,
+  image,
+  password,
+}) => {
   const [showPassword, setShowPassword] = useState(false);
-
-  const [site_name, setSite_name] = useState("Gmail");
-  const [site_url, setSite_url] = useState("mail.google.com");
-  const [password, setPassword] = useState("nopassword");
   return (
     <div className="flex items-center">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Avatar className="w-9 h-9">
-            <AvatarImage src="/avatars/01.png" alt="Avatar" />
-            <AvatarFallback>OM</AvatarFallback>
+            <AvatarImage src={image} alt="Avatar" />
+            <AvatarFallback>{name.charAt(0)}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
-          <DropdownMenuLabel>{site_name}</DropdownMenuLabel>
+          <DropdownMenuLabel>{name}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem>
@@ -63,7 +69,7 @@ const PasswordItem: FC<PasswordItemProps> = ({}) => {
         </DropdownMenuContent>
       </DropdownMenu>
       <div className="space-y-1 ml-4">
-        <p className="font-medium text-sm leading-none">{site_url}</p>
+        <p className="font-medium text-sm leading-none">{url}</p>
         <p className="text-muted-foreground text-sm truncate">
           {showPassword ? password : "••••••••"}
         </p>

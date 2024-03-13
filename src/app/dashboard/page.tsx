@@ -3,26 +3,26 @@ import PasswordItem from "@/components/PasswordItem"
 export default function Dashboard() {
   return (
     <>
-      <PasswordItem />
-      <PasswordItem />
-      <PasswordItem />
-      <PasswordItem />
-      <PasswordItem />
-      <PasswordItem />
-      <PasswordItem />
-      <PasswordItem />
-      <PasswordItem />
-      <PasswordItem />
-      <PasswordItem />
-      <PasswordItem />
-      <PasswordItem />
-      <PasswordItem />
-      <PasswordItem />
-      <PasswordItem />
-      <PasswordItem />
-      <PasswordItem />
-      <PasswordItem />
-      <PasswordItem />
+      <PasswordItem url='mail.google.com' name='Gmail' image='g' password='testpass' />
+      <PasswordItem url='mail.google.com' name='Gmail' image='g' password='testpass' />
+      <PasswordItem url='mail.google.com' name='Gmail' image='g' password='testpass' />
+      <PasswordItem url='mail.google.com' name='Gmail' image='g' password='testpass' />
+      <PasswordItem url='mail.google.com' name='Gmail' image='g' password='testpass' />
+      <PasswordItem url='mail.google.com' name='Gmail' image='g' password='testpass' />
+      <PasswordItem url='mail.google.com' name='Gmail' image='g' password='testpass' />
+      <PasswordItem url='mail.google.com' name='Gmail' image='g' password='testpass' />
+      <PasswordItem url='mail.google.com' name='Gmail' image='g' password='testpass' />
+      <PasswordItem url='mail.google.com' name='Gmail' image='g' password='testpass' />
+      <PasswordItem url='mail.google.com' name='Gmail' image='g' password='testpass' />
+      <PasswordItem url='mail.google.com' name='Gmail' image='g' password='testpass' />
+      <PasswordItem url='mail.google.com' name='Gmail' image='g' password='testpass' />
+      <PasswordItem url='mail.google.com' name='Gmail' image='g' password='testpass' />
+      <PasswordItem url='mail.google.com' name='Gmail' image='g' password='testpass' />
+      <PasswordItem url='mail.google.com' name='Gmail' image='g' password='testpass' />
+      <PasswordItem url='mail.google.com' name='Gmail' image='g' password='testpass' />
+      <PasswordItem url='mail.google.com' name='Gmail' image='g' password='testpass' />
+      <PasswordItem url='mail.google.com' name='Gmail' image='g' password='testpass' />
+      <PasswordItem url='mail.google.com' name='Gmail' image='g' password='testpass' />
     </>
   )
 }
