@@ -50,7 +50,7 @@ const PasswordItem: FC<PasswordItemProps> = ({
             <AvatarFallback>{name.charAt(0)}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-[160px]">
+        <DropdownMenuContent align="start" className="w-full">
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
               <p className="font-medium text-sm leading-none">{name}</p>
