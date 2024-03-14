@@ -11,6 +11,7 @@ export default async function Dashboard() {
       userLoginDetails[0]?.contents.length > 0 ? (
         userLoginDetails[0].contents.map((elem) => (
           <PasswordItem
+            key={elem.url}
             name={elem.name}
             url={elem.url}
             image={elem.image}
