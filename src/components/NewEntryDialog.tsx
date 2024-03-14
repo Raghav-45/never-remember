@@ -15,25 +15,44 @@ import {
 } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { addToLoginDetails, createLoginDetails } from "@/lib/dbUtils";
+import {
+  addToLoginDetails,
+  createLoginDetails,
+  getUserLoginDetails,
+} from "@/lib/dbUtils";
 
 interface NewEntryDialogProps {}
 
-const NewEntryDialog: FC<NewEntryDialogProps> = async ({}) => {
-  const [name, setName] = useState<string>();
-  const [site, setSite] = useState<string>();
-  const [login, setLogin] = useState<string>();
-  const [password, setPassword] = useState<string>();
+const NewEntryDialog: FC<NewEntryDialogProps> = ({}) => {
+  const [name, setName] = useState<string>("Gmail");
+  const [site, setSite] = useState<string>("mail.google.com");
+  const [login, setLogin] = useState<string>("adi4545aditya@gmail.com");
+  const [password, setPassword] = useState<string>("SuperSecretPass");
 
   const handleSubmit = async () => {
-    const loginDetailsId = await createLoginDetails();
-    await addToLoginDetails(loginDetailsId, {
-      url: site || "",
-      name: name || "",
-      image: "",
-      login: login || "",
-      password: password || "",
-    });
+    // const loginDetailsId = (await getUserLoginDetails())[0]?.id
+    //   ? (await getUserLoginDetails())[0].id
+    //   : await createLoginDetails();
+
+    const getloginDetailsId = async () => {
+      const existingLoginDetails = (await getUserLoginDetails())[0]?.id;
+      if (!existingLoginDetails) {
+        const newLoginDetails = await createLoginDetails();
+        return newLoginDetails;
+      }
+      return existingLoginDetails;
+    };
+
+    const loginDetailsId = await getloginDetailsId();
+
+    loginDetailsId &&
+      (await addToLoginDetails(loginDetailsId, {
+        url: site || "",
+        name: name || "",
+        image: "",
+        login: login || "",
+        password: password || "",
+      }));
   };
   return (
     <Dialog>
@@ -57,9 +76,10 @@ const NewEntryDialog: FC<NewEntryDialogProps> = async ({}) => {
               Name
             </Label>
             <Input
+              value={name}
               onChange={(e) => setName(e.target.value)}
               id="name"
-              defaultValue="Gmail"
+              defaultValue={name}
               className="col-span-3"
             />
           </div>
@@ -68,9 +88,10 @@ const NewEntryDialog: FC<NewEntryDialogProps> = async ({}) => {
               Site
             </Label>
             <Input
+              value={site}
               onChange={(e) => setSite(e.target.value)}
               id="site"
-              defaultValue="mail.google.com"
+              defaultValue={site}
               className="col-span-3"
             />
           </div>
@@ -79,9 +100,10 @@ const NewEntryDialog: FC<NewEntryDialogProps> = async ({}) => {
               Login
             </Label>
             <Input
+              value={login}
               onChange={(e) => setLogin(e.target.value)}
               id="login"
-              defaultValue="adi4545aditya@gmail.com"
+              defaultValue={login}
               className="col-span-3"
             />
           </div>
@@ -90,9 +112,10 @@ const NewEntryDialog: FC<NewEntryDialogProps> = async ({}) => {
               Password
             </Label>
             <Input
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
               id="password"
-              defaultValue="SuperSecretPass"
+              defaultValue={password}
               className="col-span-3"
             />
           </div>
