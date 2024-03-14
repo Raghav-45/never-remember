@@ -68,7 +68,7 @@ const NewEntryDialog: FC<NewEntryDialogProps> = ({}) => {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>New Password</DialogTitle>
-          <DialogDescription>Click save when you're done.</DialogDescription>
+          <DialogDescription>Click save when you&apos;re done.</DialogDescription>
         </DialogHeader>
         <div className="gap-4 grid py-4">
           <div className="items-center gap-4 grid grid-cols-4">
