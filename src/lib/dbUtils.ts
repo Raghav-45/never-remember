@@ -29,11 +29,14 @@ interface LoginContentType {
   password: string;
 }
 
+const PASSWORD_DB = 'data'
+const TESTUSERID = '81f07a37-d25d-474c-b029-e71e2fefc85b'
+
 async function getUserLoginDetails() {
   const data: LoginDetailsTypeWithId[] = []
   const q = query(
-    collection(db, 'data'),
-    where('owner', '==', '81f07a37-d25d-474c-b029-e71e2fefc85b')
+    collection(db, PASSWORD_DB),
+    where('owner', '==', TESTUSERID)
   )
   const querySnapshot = await getDocs(q)
   querySnapshot.forEach((doc) => {
@@ -44,11 +47,11 @@ async function getUserLoginDetails() {
 
 async function createLoginDetails() {
   const emptyPlaylistObject: LoginDetailsType = {
-    owner: '81f07a37-d25d-474c-b029-e71e2fefc85b',
+    owner: TESTUSERID,
     contents: [],
   }
   const playlistDocRef = await addDoc(
-    collection(db, 'data'),
+    collection(db, PASSWORD_DB),
     emptyPlaylistObject
   )
   return playlistDocRef.id
@@ -58,7 +61,7 @@ async function addToLoginDetails(
   id: string,
   whatToAdd: LoginContentType
 ) {
-  const playlistDocRef = doc(db, 'data', id)
+  const playlistDocRef = doc(db, PASSWORD_DB, id)
   await updateDoc(playlistDocRef, {
     contents: arrayUnion(whatToAdd),
   })
@@ -68,7 +71,7 @@ async function removeFromLoginDetails(
   id: string,
   whatToRemove: LoginContentType
 ) {
-  const playlistDocRef = doc(db, 'data', id)
+  const playlistDocRef = doc(db, PASSWORD_DB, id)
   await updateDoc(playlistDocRef, {
     contents: arrayRemove(whatToRemove),
   })
