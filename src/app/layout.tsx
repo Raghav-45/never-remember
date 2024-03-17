@@ -3,9 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { cn } from "@/lib/utils";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import SessionProvider from "./SessionProvider";
 import { Toaster } from "@/components/ui/sonner"
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,7 +17,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession(authOptions)
   return (
     <html
       lang='en'
@@ -29,12 +25,10 @@ export default async function RootLayout({
         inter.className
       )}
     >
-      <body className='min-h-screen bg-slate-50 antialiased'>
-        <SessionProvider session={session}>
-          {/* <Navbar /> */}
-          <div className='container max-w-7xl mx-auto h-full px-0'>{children}</div>
-          <Toaster />
-        </SessionProvider>
+      <body className='bg-slate-50 min-h-screen antialiased'>
+        {/* <Navbar /> */}
+        <div className='mx-auto px-0 max-w-7xl h-full container'>{children}</div>
+        <Toaster />
       </body>
     </html>
   );
