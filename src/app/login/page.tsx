@@ -1,8 +1,12 @@
 'use client'
 
-import { Button } from "@/components/ui/button"
-import { CustomIcons } from "@/components/CustomIcons"
-import { signIn } from "next-auth/react"
+import { Button } from '@/components/ui/button'
+import { CustomIcons } from '@/components/CustomIcons'
+import { signIn } from 'next-auth/react'
+import { useState } from 'react'
+import { Loader2 } from 'lucide-react'
+import { toast } from 'sonner'
+import { db } from '@/lib/db'
 
 // export default function Login() {
 //   return (
@@ -36,14 +40,51 @@ import { signIn } from "next-auth/react"
 // }
 
 export default function Login() {
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const loginWithGoogle = async () => {
+    setIsLoading(true)
+
+    try {
+      await signIn('google')
+    } catch (error) {
+      toast('There was a problem.', {
+        description: 'there was an error while logging in with Google',
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const loginWithGithub = async () => {
+    setIsLoading(true)
+
+    try {
+      await signIn('github')
+    } catch (error) {
+      toast('There was a problem.', {
+        description: 'there was an error while logging in with Github',
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }
   return (
     <div className="gap-6 grid grid-cols-2">
-      <Button variant="outline">
-        <CustomIcons.gitHub className="mr-2 w-4 h-4" />
+      <Button onClick={loginWithGithub} disabled={isLoading} variant="outline">
+        {isLoading ? (
+          <Loader2 className="mr-2 w-4 h-4 animate-spin" />
+        ) : (
+          <CustomIcons.gitHub className="mr-2 w-4 h-4" />
+        )}
         Github
       </Button>
-      <Button onClick={() => signIn('google')} variant="outline">
-        <CustomIcons.google className="mr-2 w-4 h-4" />
+      <Button onClick={loginWithGoogle} disabled={isLoading} variant="outline">
+        {isLoading ? (
+          <Loader2 className="mr-2 w-4 h-4 animate-spin" />
+        ) : (
+          <CustomIcons.google className="mr-2 w-4 h-4" />
+        )}
         Google
       </Button>
     </div>
