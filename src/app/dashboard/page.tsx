@@ -1,9 +1,12 @@
 import PasswordItem from "@/components/PasswordItem";
+import { authOptions } from "@/lib/auth";
 import { getUserLoginDetails } from "@/lib/dbUtils";
+import { getServerSession } from "next-auth";
 
 export default async function Dashboard() {
-  const userLoginDetails = await getUserLoginDetails();
-  console.log(userLoginDetails);
+  const session = await getServerSession(authOptions)
+
+  const userLoginDetails = await getUserLoginDetails(session?.user.id!);
   return (
     <>
       {userLoginDetails &&

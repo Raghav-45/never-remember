@@ -22,22 +22,19 @@ interface LoginDetailsType {
 type LoginDetailsTypeWithId = LoginDetailsType & { id: string }
 
 interface LoginContentType {
-  url: string;
-  name: string;
-  image: string;
-  login: string;
-  password: string;
+  url: string
+  name: string
+  image: string
+  login: string
+  password: string
 }
 
 const PASSWORD_DB = 'data'
 const TESTUSERID = '81f07a37-d25d-474c-b029-e71e2fefc85b'
 
-async function getUserLoginDetails() {
+async function getUserLoginDetails(userId: string) {
   const data: LoginDetailsTypeWithId[] = []
-  const q = query(
-    collection(db, PASSWORD_DB),
-    where('owner', '==', TESTUSERID)
-  )
+  const q = query(collection(db, PASSWORD_DB), where('owner', '==', userId))
   const querySnapshot = await getDocs(q)
   querySnapshot.forEach((doc) => {
     data.push({ id: doc.id, ...doc.data() } as LoginDetailsTypeWithId)
@@ -45,9 +42,9 @@ async function getUserLoginDetails() {
   return data
 }
 
-async function createLoginDetails() {
+async function createLoginDetails(userId: string) {
   const emptyPlaylistObject: LoginDetailsType = {
-    owner: TESTUSERID,
+    owner: userId,
     contents: [],
   }
   const playlistDocRef = await addDoc(
@@ -57,10 +54,7 @@ async function createLoginDetails() {
   return playlistDocRef.id
 }
 
-async function addToLoginDetails(
-  id: string,
-  whatToAdd: LoginContentType
-) {
+async function addToLoginDetails(id: string, whatToAdd: LoginContentType) {
   const playlistDocRef = doc(db, PASSWORD_DB, id)
   await updateDoc(playlistDocRef, {
     contents: arrayUnion(whatToAdd),

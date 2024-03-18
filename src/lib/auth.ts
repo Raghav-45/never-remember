@@ -1,24 +1,56 @@
-import type { NextAuthOptions } from "next-auth";
-import GitHubProvider from "next-auth/providers/github";
+import type { NextAuthOptions } from 'next-auth'
+import { UpstashRedisAdapter } from '@auth/upstash-redis-adapter'
+import GitHubProvider from 'next-auth/providers/github'
+import GoogleProvider from 'next-auth/providers/google'
+import { type Adapter } from 'next-auth/adapters'
+import { db } from './db'
 
-function getGithubCredentials() {
-  const clientId = process.env.GITHUB_CLIENT_ID;
-  const clientSecret = process.env.GITHUB_CLIENT_SECRET;
-
-  if (!clientId || clientId.length === 0) {
-    throw new Error("Missing GITHUB_CLIENT_ID");
-  }
-  if (!clientSecret || clientSecret.length === 0) {
-    throw new Error("Missing GITHUB_CLIENT_SECRET");
-  }
-  return { clientId, clientSecret };
-}
-
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
+  adapter: UpstashRedisAdapter(db) as Adapter,
+  session: {
+    strategy: 'jwt',
+  },
+  pages: {
+    signIn: '/login',
+  },
   providers: [
     GitHubProvider({
-      clientId: getGithubCredentials().clientId,
-      clientSecret: getGithubCredentials().clientSecret,
+      clientId: process.env.GITHUB_CLIENT_ID!,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
-} satisfies NextAuthOptions;
+  callbacks: {
+    async jwt({ token, user }) {
+      const dbUser = (await db.get(`user:${token.id}`)) as User | null
+
+      if (!dbUser) {
+        token.id = user!.id
+        return token
+      }
+
+      return {
+        id: dbUser.id,
+        name: dbUser.name,
+        email: dbUser.email,
+        picture: dbUser.image,
+      }
+    },
+    async session({ session, token }) {
+      if (token) {
+        session.user.id = token.id!
+        session.user.name = token.name!
+        session.user.email = token.email!
+        session.user.image = token.picture!
+      }
+
+      return session
+    },
+    redirect() {
+      return '/dashboard'
+    },
+  },
+}

@@ -20,6 +20,9 @@ import {
   createLoginDetails,
   getUserLoginDetails,
 } from "@/lib/dbUtils";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { getSession } from "next-auth/react";
 
 interface NewEntryDialogProps {}
 
@@ -30,14 +33,15 @@ const NewEntryDialog: FC<NewEntryDialogProps> = ({}) => {
   const [password, setPassword] = useState<string>("SuperSecretPass");
 
   const handleSubmit = async () => {
+    const session = await getSession()
     // const loginDetailsId = (await getUserLoginDetails())[0]?.id
     //   ? (await getUserLoginDetails())[0].id
     //   : await createLoginDetails();
 
     const getloginDetailsId = async () => {
-      const existingLoginDetails = (await getUserLoginDetails())[0]?.id;
+      const existingLoginDetails = (await getUserLoginDetails(session?.user.id!))[0]?.id;
       if (!existingLoginDetails) {
-        const newLoginDetails = await createLoginDetails();
+        const newLoginDetails = await createLoginDetails(session?.user.id!);
         return newLoginDetails;
       }
       return existingLoginDetails;
