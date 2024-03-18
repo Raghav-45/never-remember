@@ -12,7 +12,7 @@ export default function Dashboard() {
 
   const getUserDetails = async () => {
     const session = await getSession()
-    if (!userLoginDetails) {
+    if (!userLoginDetails.length) {
       const data = await getUserLoginDetails(session?.user.id!)
       setUserLoginDetails(data)
     }
