@@ -1,12 +1,23 @@
-import PasswordItem from "@/components/PasswordItem";
-import { authOptions } from "@/lib/auth";
-import { getUserLoginDetails } from "@/lib/dbUtils";
-import { getServerSession } from "next-auth";
+'use client'
 
-export default async function Dashboard() {
-  const session = await getServerSession(authOptions)
+import { useGenerationStore } from '@/components/GenerationStore'
+import PasswordItem from '@/components/PasswordItem'
+import { authOptions } from '@/lib/auth'
+import { getUserLoginDetails } from '@/lib/dbUtils'
+import { getServerSession } from 'next-auth'
+import { getSession } from 'next-auth/react'
 
-  const userLoginDetails = await getUserLoginDetails(session?.user.id!);
+export default function Dashboard() {
+  const { userLoginDetails, setUserLoginDetails } = useGenerationStore()
+
+  const getUserDetails = async () => {
+    const session = await getSession()
+    if (!userLoginDetails) {
+      const data = await getUserLoginDetails(session?.user.id!)
+      setUserLoginDetails(data)
+    }
+  }
+  getUserDetails()
   return (
     <>
       {userLoginDetails &&
@@ -32,5 +43,5 @@ export default async function Dashboard() {
         />
       )}
     </>
-  );
+  )
 }

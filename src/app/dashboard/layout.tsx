@@ -4,16 +4,16 @@ import {
   CardHeader,
   CardContent,
   Card,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { PlusIcon, SearchIcon } from "lucide-react";
-import NewEntryDialog from "@/components/NewEntryDialog";
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { PlusIcon, SearchIcon } from 'lucide-react'
+import NewEntryDialog from '@/components/NewEntryDialog'
 
 export default function DashboardLayout({
   children, // will be a page or nested layout
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <div className="space-y-6">
@@ -48,5 +48,5 @@ export default function DashboardLayout({
         </div>
       </div>
     </div>
-  );
+  )
 }

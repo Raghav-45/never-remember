@@ -1,8 +1,8 @@
-"use client";
+'use client'
 
-import { FC, useState } from "react";
-import { Button } from "./ui/button";
-import { PlusIcon } from "lucide-react";
+import { FC, useState } from 'react'
+import { Button } from './ui/button'
+import { PlusIcon } from 'lucide-react'
 import {
   Dialog,
   DialogClose,
@@ -12,25 +12,25 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+} from './ui/dialog'
+import { Input } from './ui/input'
+import { Label } from './ui/label'
 import {
   addToLoginDetails,
   createLoginDetails,
   getUserLoginDetails,
-} from "@/lib/dbUtils";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { getSession } from "next-auth/react";
+} from '@/lib/dbUtils'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+import { getSession } from 'next-auth/react'
 
 interface NewEntryDialogProps {}
 
 const NewEntryDialog: FC<NewEntryDialogProps> = ({}) => {
-  const [name, setName] = useState<string>("Gmail");
-  const [site, setSite] = useState<string>("mail.google.com");
-  const [login, setLogin] = useState<string>("adi4545aditya@gmail.com");
-  const [password, setPassword] = useState<string>("SuperSecretPass");
+  const [name, setName] = useState<string>('Gmail')
+  const [site, setSite] = useState<string>('mail.google.com')
+  const [login, setLogin] = useState<string>('adi4545aditya@gmail.com')
+  const [password, setPassword] = useState<string>('SuperSecretPass')
 
   const handleSubmit = async () => {
     const session = await getSession()
@@ -39,25 +39,27 @@ const NewEntryDialog: FC<NewEntryDialogProps> = ({}) => {
     //   : await createLoginDetails();
 
     const getloginDetailsId = async () => {
-      const existingLoginDetails = (await getUserLoginDetails(session?.user.id!))[0]?.id;
+      const existingLoginDetails = (
+        await getUserLoginDetails(session?.user.id!)
+      )[0]?.id
       if (!existingLoginDetails) {
-        const newLoginDetails = await createLoginDetails(session?.user.id!);
-        return newLoginDetails;
+        const newLoginDetails = await createLoginDetails(session?.user.id!)
+        return newLoginDetails
       }
-      return existingLoginDetails;
-    };
+      return existingLoginDetails
+    }
 
-    const loginDetailsId = await getloginDetailsId();
+    const loginDetailsId = await getloginDetailsId()
 
     loginDetailsId &&
       (await addToLoginDetails(loginDetailsId, {
-        url: site || "",
-        name: name || "",
-        image: "",
-        login: login || "",
-        password: password || "",
-      }));
-  };
+        url: site || '',
+        name: name || '',
+        image: '',
+        login: login || '',
+        password: password || '',
+      }))
+  }
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -72,7 +74,9 @@ const NewEntryDialog: FC<NewEntryDialogProps> = ({}) => {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>New Password</DialogTitle>
-          <DialogDescription>Click save when you&apos;re done.</DialogDescription>
+          <DialogDescription>
+            Click save when you&apos;re done.
+          </DialogDescription>
         </DialogHeader>
         <div className="gap-4 grid py-4">
           <div className="items-center gap-4 grid grid-cols-4">
@@ -131,7 +135,7 @@ const NewEntryDialog: FC<NewEntryDialogProps> = ({}) => {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}
 
-export default NewEntryDialog;
+export default NewEntryDialog

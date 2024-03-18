@@ -5,15 +5,15 @@ import {
   CardContent,
   Card,
   CardFooter,
-} from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/card'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 
 export default function LoginLayout({
   children, // will be a page or nested layout
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <Card>
@@ -48,5 +48,5 @@ export default function LoginLayout({
         <Button className="w-full">Create account</Button>
       </CardFooter>
     </Card>
-  );
+  )
 }
